@@ -17,6 +17,18 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class News {
 
+    public News(
+            List<String> imagesUrl, List<Topic> topics,
+            List<Comment> comments, List<NewsLike> likes,
+            List<NewsDislike> dislikes
+    ){
+        setImagesUrl(imagesUrl);
+        setTopics(topics);
+        setComments(comments);
+        setLikes(likes);
+        setDislikes(dislikes);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,15 +47,23 @@ public class News {
     private User author;
 
     @ElementCollection
+    @NonNull
     private List<String> imagesUrl;
 
     @ManyToMany(mappedBy = "news")
+    @NonNull
     private List<Topic> topics;
 
     @OneToMany(mappedBy = "news")
+    @NonNull
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "news")
+    @NonNull
     private List<NewsLike> likes;
 
     @OneToMany(mappedBy = "news")
+    @NonNull
     private List<NewsDislike> dislikes;
 
 }
