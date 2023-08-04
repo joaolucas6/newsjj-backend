@@ -21,6 +21,22 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class User {
 
+    public User(
+            List<User> followers, List<User> following, List<News> news,
+            List<Comment> comments, List<CommentLike> commentLikes,
+            List<CommentDislike> commentDislikes, List<NewsLike> newsLikes,
+            List<NewsDislike> newsDislikes
+    ){
+        setFollowers(followers);
+        setFollowing(following);
+        setNews(news);
+        setComments(comments);
+        setCommentLikes(commentLikes);
+        setCommentDislikes(commentDislikes);
+        setNewsLikes(newsLikes);
+        setNewsDislikes(newsDislikes);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,27 +74,35 @@ public class User {
             joinColumns = @JoinColumn(name = "followed_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
+    @NonNull
     private List<User> followers;
 
     @ManyToMany(mappedBy = "followers")
+    @NonNull
     private List<User> following;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<News> news;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<NewsLike> newsLikes;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<NewsDislike> newsDislikes;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<CommentLike> commentLikes;
 
     @OneToMany(mappedBy = "author")
+    @NonNull
     private List<CommentDislike> commentDislikes;
 
 }
