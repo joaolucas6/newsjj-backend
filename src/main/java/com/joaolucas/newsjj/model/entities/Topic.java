@@ -14,6 +14,10 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Topic {
 
+    public Topic(List<News> news){
+        setNews(news);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +34,7 @@ public class Topic {
             joinColumns = @JoinColumn(name = "topic_id"),
             inverseJoinColumns = @JoinColumn(name = "news_id")
     )
+    @NonNull
     private List<News> news;
 
 }
