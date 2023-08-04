@@ -17,6 +17,14 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Comment {
 
+    public Comment(
+            List<CommentLike> likes,
+            List<CommentDislike> dislikes
+    ){
+        setLikes(likes);
+        setDislikes(dislikes);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,9 +44,11 @@ public class Comment {
     private News news;
 
     @OneToMany(mappedBy = "comment")
+    @NonNull
     private List<CommentLike> likes;
 
     @OneToMany(mappedBy = "comment")
+    @NonNull
     private List<CommentDislike> dislikes;
 
 }
