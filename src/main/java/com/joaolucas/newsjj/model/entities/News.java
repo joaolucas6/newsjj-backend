@@ -42,7 +42,7 @@ public class News {
 
     @OneToMany(mappedBy = "news")
     private List<NewsLike> likes;
-    
+
     @OneToMany(mappedBy = "news")
     private List<NewsDislike> dislikes;
 
