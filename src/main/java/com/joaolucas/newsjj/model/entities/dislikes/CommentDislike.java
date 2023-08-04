@@ -30,5 +30,5 @@ public class CommentDislike {
 
     @Column(name = "instant")
     private LocalDateTime instant;
-    
+
 }
