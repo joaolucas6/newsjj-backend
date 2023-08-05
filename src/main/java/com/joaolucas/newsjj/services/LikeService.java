@@ -31,5 +31,5 @@ public class LikeService {
     public LikeDTO findCommentLikeById(Long id){
         return new LikeDTO(commentLikeRepository.findById(id).orElseThrow());
     }
-    
+
 }
