@@ -32,6 +32,22 @@ public class UserService {
         return new UserDTO(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id )));
     }
 
+    public UserDTO create(UserDTO userDTO){
+        User user = new User(List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword("cruzeiroesporteclube");
+        user.setGender(userDTO.getGender());
+        user.setBirthDate(userDTO.getBirthDate());
+        user.setBio(userDTO.getBio());
+        user.setProfilePicUrl(userDTO.getProfilePicUrl());
+        user.setRole(userDTO.getRole());
+
+        return new UserDTO(userRepository.save(user));
+    }
+
     public UserDTO update(Long id, UserDTO updateRequest){
         User userDatabase = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
         if(updateRequest.getFirstName() != null) userDatabase.setFirstName(updateRequest.getFirstName());
