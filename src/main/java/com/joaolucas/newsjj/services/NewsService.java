@@ -4,6 +4,7 @@ import com.joaolucas.newsjj.model.dto.DislikeDTO;
 import com.joaolucas.newsjj.model.dto.LikeDTO;
 import com.joaolucas.newsjj.model.dto.NewsDTO;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
+import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.model.entities.User;
@@ -27,6 +28,7 @@ public class NewsService {
     private final NewsRepository newsRepository;
     private final UserRepository userRepository;
     private final TopicRepository topicRepository;
+    private final CommentService commentService;
     private final NewsLikeRepository newsLikeRepository;
     private final NewsDislikeRepository newsDislikeRepository;
 
@@ -61,7 +63,30 @@ public class NewsService {
     }
 
     public void delete(Long id){
-        newsRepository.delete(newsRepository.findById(id).orElseThrow());
+        News news = newsRepository.findById(id).orElseThrow();
+
+        User author = news.getAuthor();
+        author.getNews().remove(news);
+
+        List<Topic> topics = news.getTopics();
+        topics.forEach(topic -> topic.getNews().remove(news));
+
+        List<Comment> comments = news.getComments();
+        comments.forEach(comment -> commentService.delete(comment.getId()));
+
+        List<NewsLike> likes = news.getLikes();
+        likes.forEach(like -> removeLike(like.getId()));
+
+        List<NewsDislike> dislikes = news.getDislikes();
+        dislikes.forEach(dislike -> removeDislike(dislike.getId()));
+
+        userRepository.save(author);
+        topicRepository.saveAll(topics);
+
+        
+        newsRepository.delete(news);
+
+
     }
 
     public List<String> addImage(Long newsId, String imageUrl){
