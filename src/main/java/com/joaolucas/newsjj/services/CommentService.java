@@ -1,5 +1,7 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.ConflictException;
+import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.CommentDTO;
 import com.joaolucas.newsjj.model.dto.DislikeDTO;
 import com.joaolucas.newsjj.model.dto.LikeDTO;
@@ -34,12 +36,12 @@ public class CommentService {
     }
 
     public CommentDTO findById(Long id){
-        return new CommentDTO(commentRepository.findById(id).orElseThrow());
+        return new CommentDTO(commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id)));
     }
 
     public CommentDTO create(Long authorId, Long newsId, CommentDTO commentDTO){
-        User author = userRepository.findById(authorId).orElseThrow();
-        News news =  newsRepository.findById(newsId).orElseThrow();
+        User author = userRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + authorId));
+        News news =  newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
         Comment comment = new Comment(List.of(), List.of());
         comment.setText(commentDTO.getText());
@@ -58,7 +60,7 @@ public class CommentService {
     }
 
     public CommentDTO update(Long id, CommentDTO updateRequest){
-        Comment comment = commentRepository.findById(id).orElseThrow();
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id));
 
         if(updateRequest.getText() != null) comment.setText(updateRequest.getText());
 
@@ -67,7 +69,7 @@ public class CommentService {
     }
 
     public void delete(Long id){
-        Comment comment = commentRepository.findById(id).orElseThrow();
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id));
 
         User author = comment.getAuthor();
         News news = comment.getNews();
@@ -86,11 +88,11 @@ public class CommentService {
     }
 
     public List<LikeDTO> like(Long userId, Long commentId){
-        User user = userRepository.findById(userId).orElseThrow();
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + userId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + commentId));
 
-        if (!comment.getLikes().stream().filter(like -> like.getAuthor() == user).toList().isEmpty()) throw new RuntimeException();
-        if(!comment.getDislikes().stream().filter(dislike -> dislike.getAuthor() == user).toList().isEmpty()) throw new RuntimeException();
+        if (!comment.getLikes().stream().filter(like -> like.getAuthor() == user).toList().isEmpty()) throw new ConflictException("User already liked the content");
+        if(!comment.getDislikes().stream().filter(dislike -> dislike.getAuthor() == user).toList().isEmpty()) throw new ConflictException("User has disliked the content");
 
         CommentLike commentLike = new CommentLike();
 
@@ -111,7 +113,7 @@ public class CommentService {
     }
 
     public List<LikeDTO> removeLike(Long likeId){
-        CommentLike commentLike = commentLikeRepository.findById(likeId).orElseThrow();
+        CommentLike commentLike = commentLikeRepository.findById(likeId).orElseThrow(() -> new ResourceNotFoundException("Comment like was not found with ID: " + likeId));
 
         User user = commentLike.getAuthor();
         Comment comment = commentLike.getComment();
@@ -127,11 +129,11 @@ public class CommentService {
     }
 
     public List<DislikeDTO> dislike(Long userId, Long commentId){
-        User user = userRepository.findById(userId).orElseThrow();
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + userId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + commentId));
 
-        if(!comment.getDislikes().stream().filter(dislike -> dislike.getAuthor() == user).toList().isEmpty()) throw new RuntimeException();
-        if(!comment.getLikes().stream().filter(like -> like.getAuthor() == user).toList().isEmpty()) throw new RuntimeException();
+        if(!comment.getDislikes().stream().filter(dislike -> dislike.getAuthor() == user).toList().isEmpty()) throw new ConflictException("User already disliked the content");
+        if(!comment.getLikes().stream().filter(like -> like.getAuthor() == user).toList().isEmpty()) throw new ConflictException("User has liked the content");
 
         CommentDislike commentDislike = new CommentDislike();
 
@@ -151,7 +153,7 @@ public class CommentService {
     }
 
     public List<DislikeDTO> removeDislike(Long dislikeId){
-        CommentDislike commentDislike = commentDislikeRepository.findById(dislikeId).orElseThrow();
+        CommentDislike commentDislike = commentDislikeRepository.findById(dislikeId).orElseThrow(() -> new ResourceNotFoundException("Comment dislike was not found with ID: " + dislikeId));
         User user = commentDislike.getAuthor();
         Comment comment = commentDislike.getComment();
 
