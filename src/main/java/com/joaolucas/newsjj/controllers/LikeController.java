@@ -38,5 +38,5 @@ public class LikeController {
         return ResponseEntity.ok(likeService.findCommentLikeById(id));
     }
 
-    
+
 }
