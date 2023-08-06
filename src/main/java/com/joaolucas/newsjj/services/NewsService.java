@@ -83,7 +83,7 @@ public class NewsService {
         userRepository.save(author);
         topicRepository.saveAll(topics);
 
-        
+
         newsRepository.delete(news);
 
 
