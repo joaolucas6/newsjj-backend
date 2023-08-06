@@ -1,7 +1,13 @@
 package com.joaolucas.newsjj.services;
 
 import com.joaolucas.newsjj.model.dto.UserDTO;
+import com.joaolucas.newsjj.model.entities.Comment;
+import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.User;
+import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
+import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
+import com.joaolucas.newsjj.model.entities.likes.CommentLike;
+import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +19,8 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final NewsService newsService;
+    private final CommentService commentService;
 
     public List<UserDTO> findAll(){
         return userRepository.findAll().stream().map(UserDTO::new).toList();
@@ -37,8 +45,38 @@ public class UserService {
     }
 
     public void delete(Long id){
-        userRepository.delete(userRepository.findById(id).orElseThrow());
+        User user = userRepository.findById(id).orElseThrow();
+
+        List<User> followers = user.getFollowers();
+        followers.forEach(follower -> follower.getFollowing().remove(user));
+
+        List<User> following = user.getFollowing();
+        following.forEach(followed -> followed.getFollowers().remove(user));
+
+        List<News> news = user.getNews();
+        news.forEach(n -> newsService.delete(n.getId()));
+
+        List<Comment> comments = user.getComments();
+        comments.forEach(comment -> commentService.delete(comment.getId()));
+
+        List<NewsLike> newsLikes = user.getNewsLikes();
+        newsLikes.forEach(newsLike -> newsService.removeLike(newsLike.getId()));
+
+        List<NewsDislike> newsDislikes = user.getNewsDislikes();
+        newsDislikes.forEach(newsDislike -> newsService.removeDislike(newsDislike.getId()));
+
+        List<CommentLike> commentLikes = user.getCommentLikes();
+        commentLikes.forEach(commentLike -> commentService.removeLike(commentLike.getId()));
+
+        List<CommentDislike> commentDislikes = user.getCommentDislikes();
+        commentDislikes.forEach(commentDislike -> commentService.removeDislike(commentDislike.getId()));
+
+        userRepository.saveAll(followers);
+        userRepository.saveAll(following);
+        userRepository.delete(user);
     }
+
+
 
     public List<UserDTO> follow(Long followerId, Long followedId){
         User follower = userRepository.findById(followerId).orElseThrow();
