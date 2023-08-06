@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
@@ -22,7 +23,7 @@ public class TopicService {
     }
 
     public TopicDTO findById(Long id){
-        return new TopicDTO(topicRepository.findById(id).orElseThrow());
+        return new TopicDTO(topicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + id)));
     }
 
     public TopicDTO create(TopicDTO topicDTO){
@@ -35,14 +36,15 @@ public class TopicService {
     }
 
     public TopicDTO update(Long id, TopicDTO updateRequest){
-        Topic databaseTopic = topicRepository.findById(id).orElseThrow();
+        Topic databaseTopic = topicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + id));
+
         if(updateRequest.getName() != null) databaseTopic.setName(updateRequest.getName());
         if(updateRequest.getDescription() != null) databaseTopic.setDescription(updateRequest.getDescription());
         return new TopicDTO(topicRepository.save(databaseTopic));
     }
 
     public void delete(Long id){
-        Topic topic = topicRepository.findById(id).orElseThrow();
+        Topic topic = topicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + id));
 
         List<News> news = topic.getNews();
 
