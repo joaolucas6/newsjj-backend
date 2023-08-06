@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.DislikeDTO;
 import com.joaolucas.newsjj.repositories.dislikes.CommentDislikeRepository;
 import com.joaolucas.newsjj.repositories.dislikes.NewsDislikeRepository;
@@ -20,7 +21,7 @@ public class DislikeService {
     }
 
     public DislikeDTO findNewsDislikeById(Long id){
-        return new DislikeDTO(newsDislikeRepository.findById(id).orElseThrow());
+        return new DislikeDTO(newsDislikeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News dislike was not found with ID: " + id)));
     }
 
     public List<DislikeDTO> findAllCommentDislikes(){
@@ -28,7 +29,7 @@ public class DislikeService {
     }
 
     public DislikeDTO findCommentDislikeById(Long id){
-        return new DislikeDTO(commentDislikeRepository.findById(id).orElseThrow());
+        return new DislikeDTO(commentDislikeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment dislike was not found with ID: " + id)));
     }
 
 }
