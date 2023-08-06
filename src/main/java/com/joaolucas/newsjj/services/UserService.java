@@ -1,5 +1,7 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.ConflictException;
+import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.UserDTO;
 import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.News;
@@ -27,11 +29,11 @@ public class UserService {
     }
 
     public UserDTO findById(Long id){
-        return new UserDTO(userRepository.findById(id).orElseThrow());
+        return new UserDTO(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id )));
     }
 
     public UserDTO update(Long id, UserDTO updateRequest){
-        User userDatabase = userRepository.findById(id).orElseThrow();
+        User userDatabase = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
         if(updateRequest.getFirstName() != null) userDatabase.setFirstName(updateRequest.getFirstName());
         if(updateRequest.getLastName() != null) userDatabase.setLastName(updateRequest.getLastName());
         if(updateRequest.getUsername() != null) userDatabase.setUsername(updateRequest.getUsername());
@@ -45,7 +47,7 @@ public class UserService {
     }
 
     public void delete(Long id){
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
 
         List<User> followers = user.getFollowers();
         followers.forEach(follower -> follower.getFollowing().remove(user));
@@ -79,10 +81,10 @@ public class UserService {
 
 
     public List<UserDTO> follow(Long followerId, Long followedId){
-        User follower = userRepository.findById(followerId).orElseThrow();
-        User followed = userRepository.findById(followedId).orElseThrow();
+        User follower = userRepository.findById(followerId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followerId ));
+        User followed = userRepository.findById(followedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followedId ));
 
-        if(follower.getFollowing().contains(followed) || followed.getFollowers().contains(followed)) throw new RuntimeException();
+        if(follower.getFollowing().contains(followed) || followed.getFollowers().contains(followed)) throw new ConflictException("User is already following the another given user");
 
         follower.getFollowing().add(followed);
         followed.getFollowers().add(follower);
@@ -94,10 +96,10 @@ public class UserService {
     }
 
     public List<UserDTO> unfollow(Long unfollowUserId, Long unfollowedId){
-        User unfollowUser = userRepository.findById(unfollowUserId).orElseThrow();
-        User unfollowed = userRepository.findById(unfollowedId).orElseThrow();
+        User unfollowUser = userRepository.findById(unfollowUserId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowUserId ));
+        User unfollowed = userRepository.findById(unfollowedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowedId ));
 
-        if(!unfollowUser.getFollowing().contains(unfollowed) || !unfollowed.getFollowers().contains(unfollowUser)) throw new RuntimeException();
+        if(!unfollowUser.getFollowing().contains(unfollowed) || !unfollowed.getFollowers().contains(unfollowUser)) throw new ConflictException("User doest not follow the another given user");
 
         unfollowUser.getFollowing().remove(unfollowed);
         unfollowed.getFollowers().remove(unfollowUser);
