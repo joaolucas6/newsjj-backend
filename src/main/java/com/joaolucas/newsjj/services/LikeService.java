@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.LikeDTO;
 import com.joaolucas.newsjj.repositories.likes.CommentLikeRepository;
 import com.joaolucas.newsjj.repositories.likes.NewsLikeRepository;
@@ -21,7 +22,7 @@ public class LikeService {
     }
 
     public LikeDTO findNewsLikeById(Long id){
-        return new LikeDTO(newsLikeRepository.findById(id).orElseThrow());
+        return new LikeDTO(newsLikeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News like was not found with ID: " + id)));
     }
 
     public List<LikeDTO> findAllCommentLikes(){
@@ -29,7 +30,7 @@ public class LikeService {
     }
 
     public LikeDTO findCommentLikeById(Long id){
-        return new LikeDTO(commentLikeRepository.findById(id).orElseThrow());
+        return new LikeDTO(commentLikeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment like was not found with ID: " + id)));
     }
 
 }
