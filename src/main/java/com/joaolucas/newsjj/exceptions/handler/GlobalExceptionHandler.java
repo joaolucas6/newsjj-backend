@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.exceptions.handler;
 
+import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ExceptionResponseBody;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode).body(response);
     }
 
-    
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ExceptionResponseBody> handleConflictException(ConflictException exception){
+        String error = HttpStatus.CONFLICT.name();
+        int errorCode = HttpStatus.CONFLICT.value();
+        String message = exception.getMessage();
+        LocalDateTime timestamp = LocalDateTime.now();
+
+        ExceptionResponseBody response = new ExceptionResponseBody(error, errorCode, message, timestamp);
+
+        return ResponseEntity.status(errorCode).body(response);
+    }
 
 
 }
