@@ -1,7 +1,9 @@
 package com.joaolucas.newsjj.services;
 
 import com.joaolucas.newsjj.model.dto.TopicDTO;
+import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
+import com.joaolucas.newsjj.repositories.NewsRepository;
 import com.joaolucas.newsjj.repositories.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.List;
 public class TopicService {
 
     private final TopicRepository topicRepository;
+    private final NewsRepository newsRepository;
 
     public List<TopicDTO> findAll(){
         return topicRepository.findAll().stream().map(TopicDTO::new).toList();
@@ -39,7 +42,16 @@ public class TopicService {
     }
 
     public void delete(Long id){
-        topicRepository.delete(topicRepository.findById(id).orElseThrow());
+        Topic topic = topicRepository.findById(id).orElseThrow();
+
+        List<News> news = topic.getNews();
+
+        news.forEach(n -> {
+            n.getTopics().remove(topic);
+            newsRepository.save(n);
+        });
+
+        topicRepository.delete(topic);
     }
 
 
