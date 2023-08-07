@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.model.dto;
 
+import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
@@ -20,6 +21,7 @@ public class NewsDTO {
     private LocalDateTime instant;
     private Long authorId;
     private List<String> imagesUrl;
+    private List<Long> commentsId;
     private List<Long> topicsId;
     private List<Long> likesId;
     private List<Long> dislikesId;
@@ -32,6 +34,7 @@ public class NewsDTO {
         setInstant(news.getInstant());
         setAuthorId(news.getAuthor().getId());
         setImagesUrl(news.getImagesUrl());
+        setCommentsId(news.getComments().stream().map(Comment::getId).toList());
         setTopicsId(news.getTopics().stream().map(Topic::getId).toList());
         setLikesId(news.getLikes().stream().map(NewsLike::getId).toList());
         setDislikesId(news.getDislikes().stream().map(NewsDislike::getId).toList());
