@@ -10,12 +10,14 @@ import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.model.enums.Gender;
 import com.joaolucas.newsjj.model.enums.Role;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class UserDTO {
 
     private Long id;

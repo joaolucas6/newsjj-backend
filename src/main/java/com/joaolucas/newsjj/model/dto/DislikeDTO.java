@@ -3,10 +3,12 @@ package com.joaolucas.newsjj.model.dto;
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 public class DislikeDTO {
 
     private Long id;

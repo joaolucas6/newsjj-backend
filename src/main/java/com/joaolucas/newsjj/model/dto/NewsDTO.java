@@ -5,11 +5,13 @@ import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class NewsDTO {
 
     private Long id;

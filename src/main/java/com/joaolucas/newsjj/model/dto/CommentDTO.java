@@ -4,11 +4,13 @@ import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class CommentDTO {
 
     private Long id;

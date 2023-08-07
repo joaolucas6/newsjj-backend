@@ -3,10 +3,12 @@ package com.joaolucas.newsjj.model.dto;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class TopicDTO {
 
     private Long id;

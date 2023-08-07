@@ -3,10 +3,12 @@ package com.joaolucas.newsjj.model.dto;
 import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 public class LikeDTO {
 
     private Long id;
