@@ -43,11 +43,11 @@ public class Comment {
     @JoinColumn(name = "news_id")
     private News news;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     @NonNull
     private List<CommentLike> likes;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     @NonNull
     private List<CommentDislike> dislikes;
 

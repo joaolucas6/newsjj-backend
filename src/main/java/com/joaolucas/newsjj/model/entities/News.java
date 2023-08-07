@@ -54,15 +54,15 @@ public class News {
     @NonNull
     private List<Topic> topics;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     @NonNull
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     @NonNull
     private List<NewsLike> likes;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     @NonNull
     private List<NewsDislike> dislikes;
 
