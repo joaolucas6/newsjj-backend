@@ -71,24 +71,6 @@ public class UserService {
         List<User> following = user.getFollowing();
         following.forEach(followed -> followed.getFollowers().remove(user));
 
-        List<News> news = user.getNews();
-        news.forEach(n -> newsService.delete(n.getId()));
-
-        List<Comment> comments = user.getComments();
-        comments.forEach(comment -> commentService.delete(comment.getId()));
-
-        List<NewsLike> newsLikes = user.getNewsLikes();
-        newsLikes.forEach(newsLike -> newsService.removeLike(newsLike.getId()));
-
-        List<NewsDislike> newsDislikes = user.getNewsDislikes();
-        newsDislikes.forEach(newsDislike -> newsService.removeDislike(newsDislike.getId()));
-
-        List<CommentLike> commentLikes = user.getCommentLikes();
-        commentLikes.forEach(commentLike -> commentService.removeLike(commentLike.getId()));
-
-        List<CommentDislike> commentDislikes = user.getCommentDislikes();
-        commentDislikes.forEach(commentDislike -> commentService.removeDislike(commentDislike.getId()));
-
         userRepository.saveAll(followers);
         userRepository.saveAll(following);
         userRepository.delete(user);

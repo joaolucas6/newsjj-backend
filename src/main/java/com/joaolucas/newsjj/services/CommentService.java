@@ -73,11 +73,6 @@ public class CommentService {
 
         User author = comment.getAuthor();
         News news = comment.getNews();
-        List<CommentLike> likes = comment.getLikes();
-        List<CommentDislike> dislikes = comment.getDislikes();
-
-        likes.forEach(like -> removeLike(like.getId()));
-        dislikes.forEach(dislike -> removeDislike(dislike.getId()));
 
         author.getComments().remove(comment);
         news.getComments().remove(comment);

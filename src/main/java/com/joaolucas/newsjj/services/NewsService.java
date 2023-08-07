@@ -73,15 +73,6 @@ public class NewsService {
         List<Topic> topics = news.getTopics();
         topics.forEach(topic -> topic.getNews().remove(news));
 
-        List<Comment> comments = news.getComments();
-        comments.forEach(comment -> commentService.delete(comment.getId()));
-
-        List<NewsLike> likes = news.getLikes();
-        likes.forEach(like -> removeLike(like.getId()));
-
-        List<NewsDislike> dislikes = news.getDislikes();
-        dislikes.forEach(dislike -> removeDislike(dislike.getId()));
-
         userRepository.save(author);
         topicRepository.saveAll(topics);
 
