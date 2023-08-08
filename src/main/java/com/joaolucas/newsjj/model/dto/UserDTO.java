@@ -9,15 +9,11 @@ import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.model.enums.Gender;
 import com.joaolucas.newsjj.model.enums.Role;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
 public class UserDTO {
 
     private Long id;
@@ -39,7 +35,7 @@ public class UserDTO {
     private List<Long> commentDislikesId = new ArrayList<>();
 
 
-    public UserDTO(User user){
+    public UserDTO(User user) {
 
         setId(user.getId());
         setFirstName(user.getFirstName());
@@ -60,5 +56,148 @@ public class UserDTO {
         setCommentLikesId(user.getCommentLikes().stream().map(CommentLike::getId).toList());
         setCommentDislikesId(user.getCommentDislikes().stream().map(CommentDislike::getId).toList());
 
+    }
+
+    public UserDTO() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public Gender getGender() {
+        return this.gender;
+    }
+
+    public LocalDate getBirthDate() {
+        return this.birthDate;
+    }
+
+    public String getBio() {
+        return this.bio;
+    }
+
+    public String getProfilePicUrl() {
+        return this.profilePicUrl;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public List<Long> getFollowersId() {
+        return this.followersId;
+    }
+
+    public List<Long> getFollowingId() {
+        return this.followingId;
+    }
+
+    public List<Long> getNewsId() {
+        return this.newsId;
+    }
+
+    public List<Long> getCommentsId() {
+        return this.commentsId;
+    }
+
+    public List<Long> getNewsLikesId() {
+        return this.newsLikesId;
+    }
+
+    public List<Long> getNewsDislikesId() {
+        return this.newsDislikesId;
+    }
+
+    public List<Long> getCommentLikesId() {
+        return this.commentLikesId;
+    }
+
+    public List<Long> getCommentDislikesId() {
+        return this.commentDislikesId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setFollowersId(List<Long> followersId) {
+        this.followersId = followersId;
+    }
+
+    public void setFollowingId(List<Long> followingId) {
+        this.followingId = followingId;
+    }
+
+    public void setNewsId(List<Long> newsId) {
+        this.newsId = newsId;
+    }
+
+    public void setCommentsId(List<Long> commentsId) {
+        this.commentsId = commentsId;
+    }
+
+    public void setNewsLikesId(List<Long> newsLikesId) {
+        this.newsLikesId = newsLikesId;
+    }
+
+    public void setNewsDislikesId(List<Long> newsDislikesId) {
+        this.newsDislikesId = newsDislikesId;
+    }
+
+    public void setCommentLikesId(List<Long> commentLikesId) {
+        this.commentLikesId = commentLikesId;
+    }
+
+    public void setCommentDislikesId(List<Long> commentDislikesId) {
+        this.commentDislikesId = commentDislikesId;
+    }
+
+    public String toString() {
+        return "UserDTO(id=" + this.getId() + ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() + ", username=" + this.getUsername() + ", gender=" + this.getGender() + ", birthDate=" + this.getBirthDate() + ", bio=" + this.getBio() + ", profilePicUrl=" + this.getProfilePicUrl() + ", role=" + this.getRole() + ", followersId=" + this.getFollowersId() + ", followingId=" + this.getFollowingId() + ", newsId=" + this.getNewsId() + ", commentsId=" + this.getCommentsId() + ", newsLikesId=" + this.getNewsLikesId() + ", newsDislikesId=" + this.getNewsDislikesId() + ", commentLikesId=" + this.getCommentLikesId() + ", commentDislikesId=" + this.getCommentDislikesId() + ")";
     }
 }

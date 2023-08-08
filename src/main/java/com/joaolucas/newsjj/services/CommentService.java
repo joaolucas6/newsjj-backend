@@ -43,7 +43,7 @@ public class CommentService {
         User author = userRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + authorId));
         News news =  newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
-        Comment comment = new Comment(List.of(), List.of());
+        Comment comment = new Comment();
         comment.setText(commentDTO.getText());
         comment.setInstant(LocalDateTime.now());
         comment.setAuthor(author);

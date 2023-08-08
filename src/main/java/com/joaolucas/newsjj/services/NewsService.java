@@ -6,7 +6,6 @@ import com.joaolucas.newsjj.model.dto.DislikeDTO;
 import com.joaolucas.newsjj.model.dto.LikeDTO;
 import com.joaolucas.newsjj.model.dto.NewsDTO;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
-import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.model.entities.User;
@@ -45,7 +44,7 @@ public class NewsService {
     public NewsDTO create(NewsDTO newsDTO, Long authorId){
         User author = userRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + authorId));
 
-        News news = new News(List.of(), List.of(), List.of(), List.of(), List.of());
+        News news = new News();
 
         news.setTitle(newsDTO.getTitle());
         news.setText(newsDTO.getText());

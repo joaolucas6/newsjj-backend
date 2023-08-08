@@ -2,13 +2,9 @@ package com.joaolucas.newsjj.model.dto;
 
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
 public class DislikeDTO {
 
     private Long id;
@@ -17,7 +13,7 @@ public class DislikeDTO {
     private LocalDateTime instant;
     private String dislikeType;
 
-    public DislikeDTO(CommentDislike commentDislike){
+    public DislikeDTO(CommentDislike commentDislike) {
         setId(commentDislike.getId());
         setAuthorId(commentDislike.getAuthor().getId());
         setContentId(commentDislike.getComment().getId());
@@ -25,11 +21,58 @@ public class DislikeDTO {
         setDislikeType("Comment Dislike");
     }
 
-    public DislikeDTO(NewsDislike newsDislike){
+    public DislikeDTO(NewsDislike newsDislike) {
         setId(newsDislike.getId());
         setAuthorId(newsDislike.getAuthor().getId());
         setContentId(newsDislike.getNews().getId());
         setInstant(newsDislike.getInstant());
         setDislikeType("News Dislike");
+    }
+
+    public DislikeDTO() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Long getAuthorId() {
+        return this.authorId;
+    }
+
+    public Long getContentId() {
+        return this.contentId;
+    }
+
+    public LocalDateTime getInstant() {
+        return this.instant;
+    }
+
+    public String getDislikeType() {
+        return this.dislikeType;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
+    }
+
+    public void setInstant(LocalDateTime instant) {
+        this.instant = instant;
+    }
+
+    public void setDislikeType(String dislikeType) {
+        this.dislikeType = dislikeType;
+    }
+
+    public String toString() {
+        return "DislikeDTO(id=" + this.getId() + ", authorId=" + this.getAuthorId() + ", contentId=" + this.getContentId() + ", instant=" + this.getInstant() + ", dislikeType=" + this.getDislikeType() + ")";
     }
 }

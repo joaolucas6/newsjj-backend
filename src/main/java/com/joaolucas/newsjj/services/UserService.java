@@ -3,13 +3,7 @@ package com.joaolucas.newsjj.services;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.UserDTO;
-import com.joaolucas.newsjj.model.entities.Comment;
-import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.User;
-import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
-import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
-import com.joaolucas.newsjj.model.entities.likes.CommentLike;
-import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +27,7 @@ public class UserService {
     }
 
     public UserDTO create(UserDTO userDTO){
-        User user = new User(List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+        User user = new User();
 
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

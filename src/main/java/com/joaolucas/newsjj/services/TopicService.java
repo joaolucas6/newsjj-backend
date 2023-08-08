@@ -27,7 +27,7 @@ public class TopicService {
     }
 
     public TopicDTO create(TopicDTO topicDTO){
-        Topic topic = new Topic(List.of());
+        Topic topic = new Topic();
 
         topic.setName(topicDTO.getName());
         topic.setDescription(topicDTO.getDescription());
