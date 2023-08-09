@@ -1,12 +1,13 @@
 package com.joaolucas.newsjj.utils;
 
+import com.joaolucas.newsjj.model.dto.TopicDTO;
 import com.joaolucas.newsjj.model.dto.UserDTO;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 
 public class Validation {
-    public boolean isUserInfoValid(UserDTO request) throws IllegalAccessException {
+    public boolean isUserInfoValid(UserDTO request) {
         if(isAllFieldsNull(request)) return false;
         if(request.getFirstName() != null && request.getFirstName().isBlank() || request.getFirstName() != null && request.getFirstName().length() > 25) return false;
         if(request.getLastName() != null && request.getLastName().isBlank() || request.getLastName() != null && request.getLastName().length() > 25) return false;
@@ -18,16 +19,27 @@ public class Validation {
         return true;
     }
 
+    public boolean isTopicInfoValid(TopicDTO request){
+        if(isAllFieldsNull(request)) return false;
+        if(request.getName() != null && request.getName().isBlank() || request.getName() != null && request.getName().length() > 25) return false;
+        if(request.getDescription() != null && request.getDescription().isBlank() || request.getDescription() != null && request.getDescription().length() > 160) return false;
+        return true;
+    }
 
 
-    private boolean isAllFieldsNull(Object object) throws IllegalAccessException {
+    private boolean isAllFieldsNull(Object object)  {
 
         Field[] fields = object.getClass().getDeclaredFields();
 
         for(Field field : fields){
             field.setAccessible(true);
 
-            if(field.get(object) != null) return false;
+            try {
+                if(field.get(object) != null) return false;
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
         }
 
         return true;
