@@ -8,7 +8,7 @@ import com.joaolucas.newsjj.model.dto.UserDTO;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 
-public class Validation {
+public class DataValidation {
     public boolean isUserInfoValid(UserDTO request) {
         if(isAllFieldsNull(request)) return false;
         if(request.getFirstName() != null && request.getFirstName().isBlank() || request.getFirstName() != null && request.getFirstName().length() > 25) return false;
