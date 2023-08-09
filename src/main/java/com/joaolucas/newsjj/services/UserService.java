@@ -42,6 +42,7 @@ public class UserService {
 
     public UserDTO update(Long id, UserDTO updateRequest){
         User userDatabase = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
+
         if(updateRequest.getFirstName() != null) userDatabase.setFirstName(updateRequest.getFirstName());
         if(updateRequest.getLastName() != null) userDatabase.setLastName(updateRequest.getLastName());
         if(updateRequest.getUsername() != null) userDatabase.setUsername(updateRequest.getUsername());
