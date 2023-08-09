@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.utils;
 
+import com.joaolucas.newsjj.model.dto.CommentDTO;
 import com.joaolucas.newsjj.model.dto.NewsDTO;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
 import com.joaolucas.newsjj.model.dto.UserDTO;
@@ -31,6 +32,12 @@ public class Validation {
         if(isAllFieldsNull(request)) return false;
         if(request.getTitle() != null && request.getTitle().isBlank() || request.getTitle() != null && request.getTitle().length() > 65) return false;
         if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 500) return false;
+        return true;
+    }
+
+    public boolean isCommentInfoValid(CommentDTO request){
+        if(isAllFieldsNull(request)) return false;
+        if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 280) return false;
         return true;
     }
 
