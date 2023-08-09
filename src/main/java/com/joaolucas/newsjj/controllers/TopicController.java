@@ -36,7 +36,7 @@ public class TopicController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         topicService.delete(id);
         return ResponseEntity.ok().build();
     }

@@ -5,6 +5,7 @@ import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,19 +30,19 @@ public class News {
     private User author;
 
     @ElementCollection
-    private List<String> imagesUrl;
+    private List<String> imagesUrl = new ArrayList<>();
 
     @ManyToMany(mappedBy = "news")
-    private List<Topic> topics;
+    private List<Topic> topics = new ArrayList<>();
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
-    private List<NewsLike> likes;
+    private List<NewsLike> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
-    private List<NewsDislike> dislikes;
+    private List<NewsDislike> dislikes = new ArrayList<>();
 
     public News(Long id, String title, String text, LocalDateTime instant, User author) {
         this.id = id;

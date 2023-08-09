@@ -58,15 +58,14 @@ public class UserService {
 
     public void delete(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
-
-        List<User> followers = user.getFollowers();
-        followers.forEach(follower -> follower.getFollowing().remove(user));
-
-        List<User> following = user.getFollowing();
-        following.forEach(followed -> followed.getFollowers().remove(user));
-
-        userRepository.saveAll(followers);
-        userRepository.saveAll(following);
+//        List<User> followers = user.getFollowers();
+//        followers.forEach(follower -> follower.getFollowing().remove(user));
+//
+//        List<User> following = user.getFollowing();
+//        following.forEach(followed -> followed.getFollowers().remove(user));
+//
+//        userRepository.saveAll(followers);
+//        userRepository.saveAll(following);
         userRepository.delete(user);
     }
 
@@ -91,7 +90,7 @@ public class UserService {
         User unfollowUser = userRepository.findById(unfollowUserId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowUserId ));
         User unfollowed = userRepository.findById(unfollowedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowedId ));
 
-        if(!unfollowUser.getFollowing().contains(unfollowed) || !unfollowed.getFollowers().contains(unfollowUser)) throw new ConflictException("User doest not follow the another given user");
+        if(!unfollowUser.getFollowing().contains(unfollowed) || !unfollowed.getFollowers().contains(unfollowUser)) throw new ConflictException("User does not follow the another given user");
 
         unfollowUser.getFollowing().remove(unfollowed);
         unfollowed.getFollowers().remove(unfollowUser);

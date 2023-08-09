@@ -66,14 +66,14 @@ public class NewsService {
     public void delete(Long id){
         News news = newsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + id));
 
-        User author = news.getAuthor();
-        author.getNews().remove(news);
-
-        List<Topic> topics = news.getTopics();
-        topics.forEach(topic -> topic.getNews().remove(news));
-
-        userRepository.save(author);
-        topicRepository.saveAll(topics);
+//        User author = news.getAuthor();
+//        author.getNews().remove(news);
+//
+//        List<Topic> topics = news.getTopics();
+//        topics.forEach(topic -> topic.getNews().remove(news));
+//
+//        userRepository.save(author);
+//        topicRepository.saveAll(topics);
 
 
         newsRepository.delete(news);

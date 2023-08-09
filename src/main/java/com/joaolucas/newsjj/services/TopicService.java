@@ -46,12 +46,12 @@ public class TopicService {
     public void delete(Long id){
         Topic topic = topicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + id));
 
-        List<News> news = topic.getNews();
-
-        news.forEach(n -> {
-            n.getTopics().remove(topic);
-            newsRepository.save(n);
-        });
+//        List<News> news = topic.getNews();
+//
+//        news.forEach(n -> {
+//            n.getTopics().remove(topic);
+//            newsRepository.save(n);
+//        });
 
         topicRepository.delete(topic);
     }

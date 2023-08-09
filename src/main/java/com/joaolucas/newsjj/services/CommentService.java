@@ -65,20 +65,19 @@ public class CommentService {
         if(updateRequest.getText() != null) comment.setText(updateRequest.getText());
 
         return new CommentDTO(commentRepository.save(comment));
-
     }
 
     public void delete(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id));
 
-        User author = comment.getAuthor();
-        News news = comment.getNews();
-
-        author.getComments().remove(comment);
-        news.getComments().remove(comment);
-
-        userRepository.save(author);
-        newsRepository.save(news);
+//        User author = comment.getAuthor();
+//        News news = comment.getNews();
+//
+//        author.getComments().remove(comment);
+//        news.getComments().remove(comment);
+//
+//        userRepository.save(author);
+//        newsRepository.save(news);
         commentRepository.delete(comment);
     }
 
