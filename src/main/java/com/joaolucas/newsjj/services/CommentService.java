@@ -70,14 +70,6 @@ public class CommentService {
     public void delete(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id));
 
-//        User author = comment.getAuthor();
-//        News news = comment.getNews();
-//
-//        author.getComments().remove(comment);
-//        news.getComments().remove(comment);
-//
-//        userRepository.save(author);
-//        newsRepository.save(news);
         commentRepository.delete(comment);
     }
 
@@ -108,15 +100,7 @@ public class CommentService {
 
     public List<LikeDTO> removeLike(Long likeId){
         CommentLike commentLike = commentLikeRepository.findById(likeId).orElseThrow(() -> new ResourceNotFoundException("Comment like was not found with ID: " + likeId));
-
-        User user = commentLike.getAuthor();
         Comment comment = commentLike.getComment();
-
-        user.getCommentLikes().remove(commentLike);
-        comment.getLikes().remove(commentLike);
-
-        userRepository.save(user);
-        commentRepository.save(comment);
         commentLikeRepository.delete(commentLike);
 
         return comment.getLikes().stream().map(LikeDTO::new).toList();
@@ -148,14 +132,9 @@ public class CommentService {
 
     public List<DislikeDTO> removeDislike(Long dislikeId){
         CommentDislike commentDislike = commentDislikeRepository.findById(dislikeId).orElseThrow(() -> new ResourceNotFoundException("Comment dislike was not found with ID: " + dislikeId));
-        User user = commentDislike.getAuthor();
+
         Comment comment = commentDislike.getComment();
 
-        user.getCommentDislikes().remove(commentDislike);
-        comment.getDislikes().remove(commentDislike);
-
-        userRepository.save(user);
-        commentRepository.save(comment);
         commentDislikeRepository.delete(commentDislike);
 
         return comment.getDislikes().stream().map(DislikeDTO::new).toList();

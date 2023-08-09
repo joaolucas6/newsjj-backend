@@ -15,8 +15,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final NewsService newsService;
-    private final CommentService commentService;
 
     public List<UserDTO> findAll(){
         return userRepository.findAll().stream().map(UserDTO::new).toList();
@@ -58,14 +56,6 @@ public class UserService {
 
     public void delete(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
-//        List<User> followers = user.getFollowers();
-//        followers.forEach(follower -> follower.getFollowing().remove(user));
-//
-//        List<User> following = user.getFollowing();
-//        following.forEach(followed -> followed.getFollowers().remove(user));
-//
-//        userRepository.saveAll(followers);
-//        userRepository.saveAll(following);
         userRepository.delete(user);
     }
 

@@ -66,19 +66,7 @@ public class NewsService {
     public void delete(Long id){
         News news = newsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + id));
 
-//        User author = news.getAuthor();
-//        author.getNews().remove(news);
-//
-//        List<Topic> topics = news.getTopics();
-//        topics.forEach(topic -> topic.getNews().remove(news));
-//
-//        userRepository.save(author);
-//        topicRepository.saveAll(topics);
-
-
         newsRepository.delete(news);
-
-
     }
 
     public List<String> addImage(Long newsId, String imageUrl){
@@ -158,16 +146,10 @@ public class NewsService {
 
     public List<LikeDTO> removeLike(Long likeId){
         NewsLike newsLike = newsLikeRepository.findById(likeId).orElseThrow(() -> new ResourceNotFoundException("Like was not found with ID: " + likeId));
-        User user = newsLike.getAuthor();
+
         News news = newsLike.getNews();
 
-
-        user.getNewsLikes().remove(newsLike);
-        news.getLikes().remove(newsLike);
-
         newsLikeRepository.delete(newsLike);
-        userRepository.save(user);
-        newsRepository.save(news);
 
         return news.getLikes().stream().map(LikeDTO::new).toList();
     }
@@ -199,14 +181,9 @@ public class NewsService {
     public List<DislikeDTO> removeDislike(Long dislikeId){
 
         NewsDislike newsDislike = newsDislikeRepository.findById(dislikeId).orElseThrow(() -> new ResourceNotFoundException("Dislike was not found with ID: " + dislikeId));
-        User user = newsDislike.getAuthor();
+
         News news = newsDislike.getNews();
 
-        user.getNewsDislikes().remove(newsDislike);
-        news.getDislikes().remove(newsDislike);
-
-        userRepository.save(user);
-        newsRepository.save(news);
         newsDislikeRepository.delete(newsDislike);
 
         return news.getDislikes().stream().map(DislikeDTO::new).toList();
