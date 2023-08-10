@@ -1,11 +1,13 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.repositories.NewsRepository;
 import com.joaolucas.newsjj.repositories.TopicRepository;
+import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class TopicService {
     }
 
     public TopicDTO create(TopicDTO topicDTO){
+        if(!DataValidation.isTopicInfoValid(topicDTO)) throw new BadRequestException("Invalid Topic info");
+
         Topic topic = new Topic();
 
         topic.setName(topicDTO.getName());
@@ -36,6 +40,8 @@ public class TopicService {
     }
 
     public TopicDTO update(Long id, TopicDTO updateRequest){
+        if(!DataValidation.isTopicInfoValid(updateRequest)) throw new BadRequestException("Invalid Topic info");
+
         Topic databaseTopic = topicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + id));
 
         if(updateRequest.getName() != null) databaseTopic.setName(updateRequest.getName());
