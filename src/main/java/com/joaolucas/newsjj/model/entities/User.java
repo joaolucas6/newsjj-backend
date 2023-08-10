@@ -21,13 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 25)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 25)
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "username", length = 15)
     private String username;
 
     @Column(name = "password")
@@ -39,7 +39,7 @@ public class User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "bio")
+    @Column(name = "bio", length = 160)
     private String bio;
 
     @Column(name = "profile_pic_url")
