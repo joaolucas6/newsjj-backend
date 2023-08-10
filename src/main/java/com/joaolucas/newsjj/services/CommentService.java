@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.CommentDTO;
@@ -15,6 +16,7 @@ import com.joaolucas.newsjj.repositories.NewsRepository;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import com.joaolucas.newsjj.repositories.dislikes.CommentDislikeRepository;
 import com.joaolucas.newsjj.repositories.likes.CommentLikeRepository;
+import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,8 @@ public class CommentService {
     }
 
     public CommentDTO create(Long authorId, Long newsId, CommentDTO commentDTO){
+        if(!DataValidation.isCommentInfoValid(commentDTO)) throw new BadRequestException("Invalid Comment info");
+
         User author = userRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + authorId));
         News news =  newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
@@ -60,6 +64,8 @@ public class CommentService {
     }
 
     public CommentDTO update(Long id, CommentDTO updateRequest){
+        if(!DataValidation.isCommentInfoValid(updateRequest)) throw new BadRequestException("Invalid Comment info");
+
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id));
 
         if(updateRequest.getText() != null) comment.setText(updateRequest.getText());
