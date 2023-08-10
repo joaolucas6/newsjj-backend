@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.DislikeDTO;
@@ -16,6 +17,7 @@ import com.joaolucas.newsjj.repositories.TopicRepository;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import com.joaolucas.newsjj.repositories.dislikes.NewsDislikeRepository;
 import com.joaolucas.newsjj.repositories.likes.NewsLikeRepository;
+import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,8 @@ public class NewsService {
     }
 
     public NewsDTO create(NewsDTO newsDTO, Long authorId){
+        if(!DataValidation.isNewsInfoValid(newsDTO)) throw new BadRequestException("Invalid News info");
+
         User author = userRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + authorId));
 
         News news = new News();
@@ -55,6 +59,8 @@ public class NewsService {
     }
 
     public NewsDTO update(Long id, NewsDTO updateRequest){
+        if(!DataValidation.isNewsInfoValid(updateRequest)) throw new BadRequestException("Invalid News info");
+
         News databaseNews = newsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + id));
 
         if(updateRequest.getTitle() != null) databaseNews.setTitle(updateRequest.getTitle());
