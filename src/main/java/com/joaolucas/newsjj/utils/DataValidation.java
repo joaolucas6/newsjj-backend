@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 
 public class DataValidation {
-    public boolean isUserInfoValid(UserDTO request) {
+    public static boolean isUserInfoValid(UserDTO request) {
         if(isAllFieldsNull(request)) return false;
         if(request.getFirstName() != null && request.getFirstName().isBlank() || request.getFirstName() != null && request.getFirstName().length() > 25) return false;
         if(request.getLastName() != null && request.getLastName().isBlank() || request.getLastName() != null && request.getLastName().length() > 25) return false;
@@ -21,27 +21,27 @@ public class DataValidation {
         return true;
     }
 
-    public boolean isTopicInfoValid(TopicDTO request){
+    public static boolean isTopicInfoValid(TopicDTO request){
         if(isAllFieldsNull(request)) return false;
         if(request.getName() != null && request.getName().isBlank() || request.getName() != null && request.getName().length() > 25) return false;
         if(request.getDescription() != null && request.getDescription().isBlank() || request.getDescription() != null && request.getDescription().length() > 160) return false;
         return true;
     }
 
-    public boolean isNewsInfoValid(NewsDTO request){
+    public static boolean isNewsInfoValid(NewsDTO request){
         if(isAllFieldsNull(request)) return false;
         if(request.getTitle() != null && request.getTitle().isBlank() || request.getTitle() != null && request.getTitle().length() > 65) return false;
         if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 500) return false;
         return true;
     }
 
-    public boolean isCommentInfoValid(CommentDTO request){
+    public static boolean isCommentInfoValid(CommentDTO request){
         if(isAllFieldsNull(request)) return false;
         if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 280) return false;
         return true;
     }
 
-    private boolean isAllFieldsNull(Object object)  {
+    private static boolean isAllFieldsNull(Object object)  {
 
         Field[] fields = object.getClass().getDeclaredFields();
 
