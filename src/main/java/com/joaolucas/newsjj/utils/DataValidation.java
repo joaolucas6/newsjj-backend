@@ -30,8 +30,8 @@ public class DataValidation {
 
     public static boolean isNewsInfoValid(NewsDTO request){
         if(isAllFieldsNull(request)) return false;
-        if(request.getTitle() != null && request.getTitle().isBlank() || request.getTitle() != null && request.getTitle().length() > 65) return false;
-        if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 500) return false;
+        if(request.getTitle() != null && request.getTitle().isBlank() || request.getTitle() != null && request.getTitle().length() > 300) return false;
+        if(request.getText() != null && request.getText().isBlank() || request.getText() != null && request.getText().length() > 10000) return false;
         return true;
     }
 

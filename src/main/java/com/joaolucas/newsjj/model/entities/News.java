@@ -16,10 +16,10 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 300)
     private String title;
 
-    @Column(name = "text")
+    @Column(name = "text", length = 10000)
     private String text;
 
     @Column(name = "instant")
