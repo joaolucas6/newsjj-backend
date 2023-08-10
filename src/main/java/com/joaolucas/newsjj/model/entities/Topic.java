@@ -14,10 +14,10 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 25)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 160)
     private String description;
 
     @ManyToMany
