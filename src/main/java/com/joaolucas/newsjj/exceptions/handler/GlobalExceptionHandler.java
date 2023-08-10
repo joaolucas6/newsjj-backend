@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.exceptions.handler;
 
+import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ExceptionResponseBody;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
@@ -49,5 +50,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode).body(response);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ExceptionResponseBody> handleBadRequestException(BadRequestException exception){
+        String error = HttpStatus.BAD_REQUEST.name();
+        int errorCode = HttpStatus.BAD_REQUEST.value();
+        String message = exception.getMessage();
+        LocalDateTime timestamp = LocalDateTime.now();
+
+        ExceptionResponseBody response = new ExceptionResponseBody(error, errorCode, message, timestamp);
+
+        return ResponseEntity.status(errorCode).body(response);
+    }
 
 }
