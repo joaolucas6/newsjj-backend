@@ -1,10 +1,12 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.UserDTO;
 import com.joaolucas.newsjj.model.entities.User;
 import com.joaolucas.newsjj.repositories.UserRepository;
+import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class UserService {
     }
 
     public UserDTO create(UserDTO userDTO){
+
+        if(!DataValidation.isUserInfoValid(userDTO)) throw new BadRequestException("Invalid User info");
+
         User user = new User();
 
         user.setFirstName(userDTO.getFirstName());
@@ -41,6 +46,8 @@ public class UserService {
     }
 
     public UserDTO update(Long id, UserDTO updateRequest){
+        if(!DataValidation.isUserInfoValid(updateRequest)) throw new BadRequestException("Invalid User info");
+
         User userDatabase = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id ));
 
         if(updateRequest.getFirstName() != null) userDatabase.setFirstName(updateRequest.getFirstName());
