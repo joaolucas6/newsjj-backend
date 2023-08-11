@@ -23,11 +23,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     public List<UserDTO> findAll(){
-        return userRepository.findAll().stream().map(UserDTO::new).toList();
+        return userRepository.findAll().stream().map(user -> new UserDTO(user).add(linkTo(methodOn(UserController.class).findById(user.getId())).withSelfRel())).toList();
     }
 
     public UserDTO findById(Long id){
-        return new UserDTO(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id )));
+        return new UserDTO(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + id )))
+                .add(linkTo(methodOn(UserController.class).findById(id)).withSelfRel());
     }
 
     public UserDTO create(UserDTO userDTO){
