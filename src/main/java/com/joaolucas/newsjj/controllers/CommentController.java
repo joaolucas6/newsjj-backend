@@ -48,23 +48,27 @@ public class CommentController {
     }
 
     @PostMapping("/likes/{userId}/{commentId}")
-    public ResponseEntity<List<LikeDTO>> like(@PathVariable Long userId, @PathVariable Long commentId){
-        return ResponseEntity.ok(commentService.like(userId, commentId));
+    public ResponseEntity<Void> like(@PathVariable Long userId, @PathVariable Long commentId){
+        commentService.like(userId, commentId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/likes/{likeId}")
-    public ResponseEntity<List<LikeDTO>> removeLike(@PathVariable Long likeId){
-        return ResponseEntity.ok(commentService.removeLike(likeId));
+    public ResponseEntity<Void> removeLike(@PathVariable Long likeId){
+        commentService.removeLike(likeId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/dislikes/{userId}/{commentId}")
-    public ResponseEntity<List<DislikeDTO>> dislike(@PathVariable Long userId, @PathVariable Long commentId){
-        return ResponseEntity.ok(commentService.dislike(userId, commentId));
+    public ResponseEntity<Void> dislike(@PathVariable Long userId, @PathVariable Long commentId){
+        commentService.dislike(userId, commentId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/dislikes/{dislikeId}")
-    public ResponseEntity<List<DislikeDTO>> removeDislike(@PathVariable Long dislikeId){
-        return ResponseEntity.ok(commentService.removeDislike(dislikeId));
+    public ResponseEntity<Void> removeDislike(@PathVariable Long dislikeId){
+        commentService.removeDislike(dislikeId);
+        return ResponseEntity.ok().build();
     }
 
 }

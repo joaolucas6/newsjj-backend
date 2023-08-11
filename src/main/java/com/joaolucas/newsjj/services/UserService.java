@@ -69,7 +69,7 @@ public class UserService {
 
 
 
-    public List<UserDTO> follow(Long followerId, Long followedId){
+    public void follow(Long followerId, Long followedId){
         User follower = userRepository.findById(followerId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followerId ));
         User followed = userRepository.findById(followedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followedId ));
 
@@ -81,10 +81,9 @@ public class UserService {
         userRepository.save(follower);
         userRepository.save(followed);
 
-        return follower.getFollowing().stream().map(UserDTO::new).toList();
     }
 
-    public List<UserDTO> unfollow(Long unfollowUserId, Long unfollowedId){
+    public void unfollow(Long unfollowUserId, Long unfollowedId){
         User unfollowUser = userRepository.findById(unfollowUserId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowUserId ));
         User unfollowed = userRepository.findById(unfollowedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowedId ));
 
@@ -96,7 +95,6 @@ public class UserService {
         userRepository.save(unfollowed);
         userRepository.save(unfollowUser);
 
-        return unfollowUser.getFollowing().stream().map(UserDTO::new).toList();
     }
 
 }

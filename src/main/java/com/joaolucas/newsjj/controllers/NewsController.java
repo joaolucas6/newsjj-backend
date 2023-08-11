@@ -46,43 +46,51 @@ public class NewsController {
     }
 
     @PostMapping("/images/{newsId}/{imageUrl}")
-    public ResponseEntity<List<String>> addImage(@PathVariable Long newsId, @PathVariable String imageUrl){
-        return ResponseEntity.ok(newsService.addImage(newsId, imageUrl));
+    public ResponseEntity<Void> addImage(@PathVariable Long newsId, @PathVariable String imageUrl){
+        newsService.addImage(newsId, imageUrl);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/images/{newsId}/{imageUrl}")
-    public ResponseEntity<List<String>> removeImage(@PathVariable Long newsId, @PathVariable String imageUrl){
-        return ResponseEntity.ok(newsService.removeImage(newsId, imageUrl));
+    public ResponseEntity<Void> removeImage(@PathVariable Long newsId, @PathVariable String imageUrl){
+        newsService.removeImage(newsId, imageUrl);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/topics/{newsId}/{topicId}")
-    public ResponseEntity<List<TopicDTO>> addTopic(@PathVariable Long newsId, @PathVariable Long topicId){
-        return ResponseEntity.ok(newsService.addTopic(newsId, topicId));
+    public ResponseEntity<Void> addTopic(@PathVariable Long newsId, @PathVariable Long topicId){
+        newsService.addTopic(newsId, topicId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/topics/{newsId}/{topicId}")
-    public ResponseEntity<List<TopicDTO>> removeTopic(@PathVariable Long newsId, @PathVariable Long topicId){
-        return ResponseEntity.ok(newsService.removeTopic(newsId, topicId));
+    public ResponseEntity<Void> removeTopic(@PathVariable Long newsId, @PathVariable Long topicId){
+        newsService.removeTopic(newsId, topicId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/likes/{userId}/{newsId}")
-    public ResponseEntity<List<LikeDTO>> like(@PathVariable Long userId, @PathVariable Long newsId){
-        return ResponseEntity.ok(newsService.like(userId, newsId));
+    public ResponseEntity<Void> like(@PathVariable Long userId, @PathVariable Long newsId){
+        newsService.like(userId, newsId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/likes/{likeId}")
-    public ResponseEntity<List<LikeDTO>> removeLike(@PathVariable Long likeId){
-        return ResponseEntity.ok(newsService.removeLike(likeId));
+    public ResponseEntity<Void> removeLike(@PathVariable Long likeId){
+        newsService.removeLike(likeId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/dislikes/{userId}/{newsId}")
-    public ResponseEntity<List<DislikeDTO>> dislike(@PathVariable Long userId, @PathVariable Long newsId){
-        return ResponseEntity.ok(newsService.dislike(userId, newsId));
+    public ResponseEntity<Void> dislike(@PathVariable Long userId, @PathVariable Long newsId){
+        newsService.dislike(userId, newsId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/dislikes/{dislikeId}")
-    public ResponseEntity<List<DislikeDTO>> removeDislike(@PathVariable Long dislikeId){
-        return ResponseEntity.ok(newsService.removeDislike(dislikeId));
+    public ResponseEntity<Void> removeDislike(@PathVariable Long dislikeId){
+        newsService.removeDislike(dislikeId);
+        return ResponseEntity.ok().build();
     }
 
 }

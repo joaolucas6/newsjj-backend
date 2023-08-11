@@ -42,13 +42,15 @@ public class UserController {
     }
 
     @PostMapping("/follow/{followerId}/{followedId}")
-    public ResponseEntity<List<UserDTO>> follow(@PathVariable Long followerId, @PathVariable Long followedId){
-        return ResponseEntity.ok(userService.follow(followerId, followedId));
+    public ResponseEntity<Void> follow(@PathVariable Long followerId, @PathVariable Long followedId){
+        userService.follow(followerId, followedId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/unfollow/{unfollowUserId}/{unfollowedId}")
-    public ResponseEntity<List<UserDTO>> unfollow(@PathVariable Long unfollowUserId, @PathVariable Long unfollowedId){
-        return ResponseEntity.ok(userService.unfollow(unfollowUserId, unfollowedId));
+    public ResponseEntity<Void> unfollow(@PathVariable Long unfollowUserId, @PathVariable Long unfollowedId){
+        userService.unfollow(unfollowUserId, unfollowedId);
+        return ResponseEntity.ok().build();
     }
 
 

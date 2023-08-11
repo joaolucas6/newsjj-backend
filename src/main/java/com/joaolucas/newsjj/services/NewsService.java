@@ -75,27 +75,24 @@ public class NewsService {
         newsRepository.delete(news);
     }
 
-    public List<String> addImage(Long newsId, String imageUrl){
+    public void addImage(Long newsId, String imageUrl){
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
         news.getImagesUrl().add(imageUrl);
 
         newsRepository.save(news);
 
-        return news.getImagesUrl();
     }
 
-    public List<String> removeImage(Long newsId, String imageUrl){
+    public void removeImage(Long newsId, String imageUrl){
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
         news.getImagesUrl().remove(imageUrl);
 
         newsRepository.save(news);
-
-        return news.getImagesUrl();
     }
 
-    public List<TopicDTO> addTopic(Long newsId, Long topicId){
+    public void addTopic(Long newsId, Long topicId){
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + topicId));
 
@@ -107,10 +104,9 @@ public class NewsService {
         newsRepository.save(news);
         topicRepository.save(topic);
 
-        return news.getTopics().stream().map(TopicDTO::new).toList();
     }
 
-    public List<TopicDTO> removeTopic(Long newsId, Long topicId){
+    public void removeTopic(Long newsId, Long topicId){
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic was not found with ID: " + topicId));
 
@@ -122,10 +118,9 @@ public class NewsService {
         newsRepository.save(news);
         topicRepository.save(topic);
 
-        return news.getTopics().stream().map(TopicDTO::new).toList();
     }
 
-    public List<LikeDTO> like(Long userId, Long newsId){
+    public void like(Long userId, Long newsId){
 
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + userId));
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
@@ -147,20 +142,17 @@ public class NewsService {
         userRepository.save(user);
         newsRepository.save(news);
 
-        return news.getLikes().stream().map(LikeDTO::new).toList();
     }
 
-    public List<LikeDTO> removeLike(Long likeId){
+    public void removeLike(Long likeId){
         NewsLike newsLike = newsLikeRepository.findById(likeId).orElseThrow(() -> new ResourceNotFoundException("Like was not found with ID: " + likeId));
 
-        News news = newsLike.getNews();
 
         newsLikeRepository.delete(newsLike);
 
-        return news.getLikes().stream().map(LikeDTO::new).toList();
     }
 
-    public List<DislikeDTO> dislike(Long userId, Long newsId){
+    public void dislike(Long userId, Long newsId){
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User was not found with ID: " + userId));
         News news = newsRepository.findById(newsId).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + newsId));
 
@@ -181,18 +173,14 @@ public class NewsService {
         userRepository.save(user);
         newsRepository.save(news);
 
-        return news.getDislikes().stream().map(DislikeDTO::new).toList();
     }
 
-    public List<DislikeDTO> removeDislike(Long dislikeId){
+    public void removeDislike(Long dislikeId){
 
         NewsDislike newsDislike = newsDislikeRepository.findById(dislikeId).orElseThrow(() -> new ResourceNotFoundException("Dislike was not found with ID: " + dislikeId));
 
-        News news = newsDislike.getNews();
-
         newsDislikeRepository.delete(newsDislike);
 
-        return news.getDislikes().stream().map(DislikeDTO::new).toList();
     }
 
 
