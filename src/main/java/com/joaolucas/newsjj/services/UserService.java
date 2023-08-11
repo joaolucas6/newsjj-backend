@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.controllers.UserController;
 import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +46,7 @@ public class UserService {
         user.setProfilePicUrl(userDTO.getProfilePicUrl());
         user.setRole(userDTO.getRole());
 
-        return new UserDTO(userRepository.save(user));
+        return new UserDTO(userRepository.save(user)).add(linkTo(methodOn(UserController.class).findById(user.getId())).withSelfRel());
     }
 
     public UserDTO update(Long id, UserDTO updateRequest){
@@ -59,7 +63,7 @@ public class UserService {
         if(updateRequest.getProfilePicUrl() != null) userDatabase.setProfilePicUrl(updateRequest.getProfilePicUrl());
         if(updateRequest.getRole() != null) userDatabase.setRole(updateRequest.getRole());
 
-        return new UserDTO(userRepository.save(userDatabase));
+        return new UserDTO(userRepository.save(userDatabase)).add(linkTo(methodOn(UserController.class).findById(id)).withSelfRel());
     }
 
     public void delete(Long id){
