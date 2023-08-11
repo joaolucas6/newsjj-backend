@@ -2,10 +2,11 @@ package com.joaolucas.newsjj.model.dto;
 
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
-public class TopicDTO {
+public class TopicDTO extends RepresentationModel<TopicDTO> {
 
     private Long id;
     private String name;

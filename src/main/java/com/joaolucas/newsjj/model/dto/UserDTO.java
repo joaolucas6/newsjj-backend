@@ -9,12 +9,13 @@ import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.model.enums.Gender;
 import com.joaolucas.newsjj.model.enums.Role;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDTO {
+public class UserDTO extends RepresentationModel<UserDTO> {
 
     private Long id;
     private String firstName;

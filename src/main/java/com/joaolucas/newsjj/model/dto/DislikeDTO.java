@@ -2,10 +2,11 @@ package com.joaolucas.newsjj.model.dto;
 
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public class DislikeDTO {
+public class DislikeDTO extends RepresentationModel<DislikeDTO> {
 
     private Long id;
     private Long authorId;

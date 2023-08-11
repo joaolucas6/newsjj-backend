@@ -3,11 +3,12 @@ package com.joaolucas.newsjj.model.dto;
 import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.likes.CommentLike;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CommentDTO {
+public class CommentDTO extends RepresentationModel<CommentDTO> {
 
     private Long id;
     private String text;

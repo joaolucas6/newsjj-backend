@@ -5,11 +5,12 @@ import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class NewsDTO {
+public class NewsDTO extends RepresentationModel<NewsDTO> {
 
     private Long id;
     private String title;

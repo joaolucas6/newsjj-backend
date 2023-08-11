@@ -2,10 +2,11 @@ package com.joaolucas.newsjj.model.dto;
 
 import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public class LikeDTO {
+public class LikeDTO extends RepresentationModel<LikeDTO> {
 
     private Long id;
     private Long authorId;
