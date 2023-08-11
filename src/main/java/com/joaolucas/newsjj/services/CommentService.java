@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.controllers.CommentController;
 import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
@@ -23,6 +24,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -34,11 +38,11 @@ public class CommentService {
     private final CommentDislikeRepository commentDislikeRepository;
 
     public List<CommentDTO> findAll(){
-        return commentRepository.findAll().stream().map(CommentDTO::new).toList();
+        return commentRepository.findAll().stream().map(comment -> new CommentDTO(comment).add(linkTo(methodOn(CommentController.class).findById(comment.getId())).withSelfRel())).toList();
     }
 
     public CommentDTO findById(Long id){
-        return new CommentDTO(commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id)));
+        return new CommentDTO(commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment was not found with ID: " + id))).add(linkTo(methodOn(CommentController.class).findById(id)).withSelfRel());
     }
 
     public CommentDTO create(Long authorId, Long newsId, CommentDTO commentDTO){
@@ -60,7 +64,9 @@ public class CommentService {
         userRepository.save(author);
         newsRepository.save(news);
 
-        return new CommentDTO(savedComment);
+
+
+        return new CommentDTO(savedComment).add(linkTo(methodOn(CommentController.class).findById(comment.getId())).withSelfRel());
     }
 
     public CommentDTO update(Long id, CommentDTO updateRequest){
@@ -70,7 +76,9 @@ public class CommentService {
 
         if(updateRequest.getText() != null) comment.setText(updateRequest.getText());
 
-        return new CommentDTO(commentRepository.save(comment));
+        Comment savedComment = commentRepository.save(comment);
+
+        return new CommentDTO(savedComment).add(linkTo(methodOn(CommentController.class).findById(comment.getId())).withSelfRel());
     }
 
     public void delete(Long id){
