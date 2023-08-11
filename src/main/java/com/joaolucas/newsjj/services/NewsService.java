@@ -1,5 +1,6 @@
 package com.joaolucas.newsjj.services;
 
+import com.joaolucas.newsjj.controllers.NewsController;
 import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
@@ -24,6 +25,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Service
 @RequiredArgsConstructor
 public class NewsService {
@@ -36,11 +40,11 @@ public class NewsService {
     private final NewsDislikeRepository newsDislikeRepository;
 
     public List<NewsDTO> findAll(){
-        return newsRepository.findAll().stream().map(NewsDTO::new).toList();
+        return newsRepository.findAll().stream().map(news -> new NewsDTO(news).add(linkTo(methodOn(NewsController.class).findById(news.getId())).withSelfRel())).toList();
     }
 
     public NewsDTO findById(Long id){
-        return new NewsDTO(newsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + id)));
+        return new NewsDTO(newsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("News was not found with ID: " + id))).add(linkTo(methodOn(NewsController.class).findById(id)).withSelfRel());
     }
 
     public NewsDTO create(NewsDTO newsDTO, Long authorId){
@@ -55,7 +59,9 @@ public class NewsService {
         news.setInstant(LocalDateTime.now());
         news.setAuthor(author);
 
-        return new NewsDTO(newsRepository.save(news));
+        News savedNews = newsRepository.save(news);
+
+        return new NewsDTO(savedNews).add(linkTo(methodOn(NewsController.class).findById(savedNews.getId())).withSelfRel());
     }
 
     public NewsDTO update(Long id, NewsDTO updateRequest){
@@ -66,7 +72,9 @@ public class NewsService {
         if(updateRequest.getTitle() != null) databaseNews.setTitle(updateRequest.getTitle());
         if(updateRequest.getText() != null) databaseNews.setText(updateRequest.getText());
 
-        return new NewsDTO(newsRepository.save(databaseNews));
+        News savedNews = newsRepository.save(databaseNews);
+
+        return new NewsDTO(savedNews).add(linkTo(methodOn(NewsController.class).findById(savedNews.getId())).withSelfRel());
     }
 
     public void delete(Long id){
