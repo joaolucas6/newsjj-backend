@@ -1,8 +1,10 @@
 package com.joaolucas.newsjj.config;
 
+import com.joaolucas.newsjj.model.enums.Role;
 import com.joaolucas.newsjj.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,8 +35,64 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**")
                         .permitAll()
-                        .anyRequest()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/users/**",
+                                "/api/v1/topics/**",
+                                "/api/v1/news/**",
+                                "/api/v1/comments/**",
+                                "/api/v1/likes/**",
+                                "/api/v1/dislikes/**"
+                        )
                         .authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/comments/**",
+                                "/api/v1/news/likes/**",
+                                "/api/v1/news/dislikes/**",
+                                "/api/v1/users/follow/**",
+                                "/api/v1/users/unfollow/**"
+                        )
+                        .authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/v1/comments/**"
+                        )
+                        .authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/v1/comments/**",
+                                "/api/v1/news/likes/**",
+                                "/api/v1/news/dislikes/**"
+                        )
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/api/v1/users/**"
+                        )
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/news/**"
+                        )
+                        .hasAnyRole("ROLE_ADMIN", "ROLE_JOURNALIST")
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/api/v1/news/**"
+                        )
+                        .hasAnyRole("ROLE_ADMIN", "ROLE_JOURNALIST")
+
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/api/v1/news/**"
+                        )
+                        .hasAnyRole("ROLE_ADMIN", "ROLE_JOURNALIST")
+
+                        .anyRequest()
+                        .hasRole("ROLE_ADMIN")
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
