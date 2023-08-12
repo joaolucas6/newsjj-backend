@@ -21,7 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
-public class UserService extends UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
