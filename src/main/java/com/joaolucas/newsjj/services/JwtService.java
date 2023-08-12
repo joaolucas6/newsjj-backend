@@ -10,14 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
 public class JwtService {
 
-    @Value("application.security.jwt.secret-key")
-    private final String SECRET_KEY;
+    @Value("${application.security.jwt.secret-key}")
+    private String SECRET_KEY;
 
-    @Value("application.security.jwt.expiration")
-    private final long expiration;
+    @Value("${application.security.jwt.expiration}")
+    private long expiration;
 
 
     public String generateToken(User user){

@@ -4,6 +4,7 @@ import com.joaolucas.newsjj.model.dto.records.AuthenticationRequest;
 import com.joaolucas.newsjj.model.dto.records.AuthenticationResponse;
 import com.joaolucas.newsjj.model.dto.records.RegisterRequest;
 import com.joaolucas.newsjj.model.entities.User;
+import com.joaolucas.newsjj.model.enums.Role;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,7 @@ public class AuthenticationService {
         user.setLastName(registerRequest.lastName());
         user.setUsername(registerRequest.username());
         user.setPassword(passwordEncoder.encode(registerRequest.password()));
+        user.setRole(Role.valueOf(registerRequest.role()));
 
         User savedUser = userRepository.save(user);
 

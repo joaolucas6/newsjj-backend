@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -59,6 +60,9 @@ public class UserService implements UserDetailsService {
 
 
     public void follow(Long followerId, Long followedId){
+
+        if(Objects.equals(followerId, followedId)) throw new ConflictException("Users can not follow or unfollow themselves");
+
         User follower = userRepository.findById(followerId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followerId ));
         User followed = userRepository.findById(followedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + followedId ));
 
@@ -73,6 +77,9 @@ public class UserService implements UserDetailsService {
     }
 
     public void unfollow(Long unfollowUserId, Long unfollowedId){
+
+        if(Objects.equals(unfollowUserId, unfollowedId)) throw new ConflictException("Users can not follow or unfollow themselves");
+
         User unfollowUser = userRepository.findById(unfollowUserId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowUserId ));
         User unfollowed = userRepository.findById(unfollowedId).orElseThrow(() -> new ResourceNotFoundException("User was not found with id: " + unfollowedId ));
 

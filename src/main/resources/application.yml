@@ -11,5 +11,5 @@ spring:
 application:
   security:
     jwt:
-      secret-key: {SECRET_KEY}
+      secret-key: ${SECRET_KEY}
       expiration: 86400000
