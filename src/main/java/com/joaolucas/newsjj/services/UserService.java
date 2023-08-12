@@ -31,25 +31,6 @@ public class UserService {
                 .add(linkTo(methodOn(UserController.class).findById(id)).withSelfRel());
     }
 
-    public UserDTO create(UserDTO userDTO){
-
-        if(!DataValidation.isUserInfoValid(userDTO)) throw new BadRequestException("Invalid User info");
-
-        User user = new User();
-
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword("cruzeiroesporteclube");
-        user.setGender(userDTO.getGender());
-        user.setBirthDate(userDTO.getBirthDate());
-        user.setBio(userDTO.getBio());
-        user.setProfilePicUrl(userDTO.getProfilePicUrl());
-        user.setRole(userDTO.getRole());
-
-        return new UserDTO(userRepository.save(user)).add(linkTo(methodOn(UserController.class).findById(user.getId())).withSelfRel());
-    }
-
     public UserDTO update(Long id, UserDTO updateRequest){
         if(!DataValidation.isUserInfoValid(updateRequest)) throw new BadRequestException("Invalid User info");
 
