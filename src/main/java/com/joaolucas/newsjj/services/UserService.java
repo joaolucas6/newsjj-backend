@@ -9,6 +9,9 @@ import com.joaolucas.newsjj.model.entities.User;
 import com.joaolucas.newsjj.repositories.UserRepository;
 import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService extends UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -83,4 +86,8 @@ public class UserService {
 
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User was not found with username: " + username ));
+    }
 }
