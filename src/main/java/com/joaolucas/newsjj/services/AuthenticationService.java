@@ -31,7 +31,7 @@ public class AuthenticationService {
 
         User savedUser = userRepository.save(user);
 
-        String tokenJwt = jwtService.generateToken(user);
+        String tokenJwt = jwtService.generateToken(savedUser);
 
         return new AuthenticationResponse(tokenJwt);
     }
