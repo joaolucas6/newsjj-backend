@@ -4,13 +4,11 @@ import com.joaolucas.newsjj.controllers.TopicController;
 import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.TopicDTO;
-import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.Topic;
 import com.joaolucas.newsjj.repositories.NewsRepository;
 import com.joaolucas.newsjj.repositories.TopicRepository;
 import com.joaolucas.newsjj.utils.DataValidation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

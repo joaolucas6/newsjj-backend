@@ -5,8 +5,6 @@ import com.joaolucas.newsjj.exceptions.BadRequestException;
 import com.joaolucas.newsjj.exceptions.ConflictException;
 import com.joaolucas.newsjj.exceptions.ResourceNotFoundException;
 import com.joaolucas.newsjj.model.dto.CommentDTO;
-import com.joaolucas.newsjj.model.dto.DislikeDTO;
-import com.joaolucas.newsjj.model.dto.LikeDTO;
 import com.joaolucas.newsjj.model.entities.Comment;
 import com.joaolucas.newsjj.model.entities.News;
 import com.joaolucas.newsjj.model.entities.User;
