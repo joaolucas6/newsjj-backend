@@ -10,7 +10,7 @@
 
 
 
-This is a backend project for a website where journalists can post their news, and users can view and comment on it
+This is a backend project for a website where journalists can post their news, and users can view and comment on it.
 
 
 ## Installation
