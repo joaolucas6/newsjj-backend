@@ -21,7 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class TopicService {
 
     private final TopicRepository topicRepository;
-    private final NewsRepository newsRepository;
 
     public List<TopicDTO> findAll(){
         return topicRepository.findAll().stream().map(topic -> new TopicDTO(topic).add(linkTo(methodOn(TopicController.class).findById(topic.getId())).withSelfRel())).toList();
@@ -62,6 +61,7 @@ public class TopicService {
 
         topicRepository.delete(topic);
     }
+
 
 
 }

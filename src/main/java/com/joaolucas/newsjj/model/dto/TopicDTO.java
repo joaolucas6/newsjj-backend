@@ -5,6 +5,7 @@ import com.joaolucas.newsjj.model.entities.Topic;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TopicDTO extends RepresentationModel<TopicDTO> {
 
@@ -57,5 +58,18 @@ public class TopicDTO extends RepresentationModel<TopicDTO> {
 
     public String toString() {
         return "TopicDTO(id=" + this.getId() + ", name=" + this.getName() + ", description=" + this.getDescription() + ", newsId=" + this.getNewsId() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TopicDTO topicDTO = (TopicDTO) o;
+        return Objects.equals(id, topicDTO.id) && Objects.equals(name, topicDTO.name) && Objects.equals(description, topicDTO.description) && Objects.equals(newsId, topicDTO.newsId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, name, description, newsId);
     }
 }
