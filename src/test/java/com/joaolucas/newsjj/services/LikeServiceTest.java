@@ -1,8 +1,6 @@
 package com.joaolucas.newsjj.services;
 
 import com.joaolucas.newsjj.model.dto.LikeDTO;
-import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
-import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
 import com.joaolucas.newsjj.model.entities.likes.CommentLike;
 import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.repositories.likes.CommentLikeRepository;
@@ -17,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,7 +68,7 @@ class LikeServiceTest {
     }
 
     @Test
-    void itShouldFindCommentById() {
+    void itShouldFindCommentDislikeById() {
         commentLike = new CommentLike();
 
         when(commentLikeRepository.findById(1L)).thenReturn(Optional.of(commentLike));

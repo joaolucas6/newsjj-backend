@@ -1,15 +1,10 @@
 package com.joaolucas.newsjj.services;
 
 import com.joaolucas.newsjj.model.dto.DislikeDTO;
-import com.joaolucas.newsjj.model.dto.LikeDTO;
 import com.joaolucas.newsjj.model.entities.dislikes.CommentDislike;
 import com.joaolucas.newsjj.model.entities.dislikes.NewsDislike;
-import com.joaolucas.newsjj.model.entities.likes.CommentLike;
-import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import com.joaolucas.newsjj.repositories.dislikes.CommentDislikeRepository;
 import com.joaolucas.newsjj.repositories.dislikes.NewsDislikeRepository;
-import com.joaolucas.newsjj.repositories.likes.CommentLikeRepository;
-import com.joaolucas.newsjj.repositories.likes.NewsLikeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
