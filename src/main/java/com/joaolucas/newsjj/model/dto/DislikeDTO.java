@@ -16,16 +16,16 @@ public class DislikeDTO extends RepresentationModel<DislikeDTO> {
 
     public DislikeDTO(CommentDislike commentDislike) {
         setId(commentDislike.getId());
-        setAuthorId(commentDislike.getAuthor().getId());
-        setContentId(commentDislike.getComment().getId());
+        if(commentDislike.getAuthor() != null) setAuthorId(commentDislike.getAuthor().getId());
+        if(commentDislike.getComment() != null) setContentId(commentDislike.getComment().getId());
         setInstant(commentDislike.getInstant());
         setDislikeType("Comment Dislike");
     }
 
     public DislikeDTO(NewsDislike newsDislike) {
         setId(newsDislike.getId());
-        setAuthorId(newsDislike.getAuthor().getId());
-        setContentId(newsDislike.getNews().getId());
+        if(newsDislike.getAuthor() != null) setAuthorId(newsDislike.getAuthor().getId());
+        if(newsDislike.getNews() != null) setContentId(newsDislike.getNews().getId());
         setInstant(newsDislike.getInstant());
         setDislikeType("News Dislike");
     }
