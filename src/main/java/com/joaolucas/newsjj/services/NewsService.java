@@ -32,7 +32,6 @@ public class NewsService {
     private final NewsRepository newsRepository;
     private final UserRepository userRepository;
     private final TopicRepository topicRepository;
-    private final CommentService commentService;
     private final NewsLikeRepository newsLikeRepository;
     private final NewsDislikeRepository newsDislikeRepository;
 
@@ -53,7 +52,7 @@ public class NewsService {
 
         news.setTitle(newsDTO.getTitle());
         news.setText(newsDTO.getText());
-        news.setInstant(LocalDateTime.now());
+        news.setInstant(newsDTO.getInstant());
         news.setAuthor(author);
 
         News savedNews = newsRepository.save(news);
@@ -152,9 +151,7 @@ public class NewsService {
     public void removeLike(Long likeId){
         NewsLike newsLike = newsLikeRepository.findById(likeId).orElseThrow(() -> new ResourceNotFoundException("Like was not found with ID: " + likeId));
 
-
         newsLikeRepository.delete(newsLike);
-
     }
 
     public void dislike(Long userId, Long newsId){
@@ -187,6 +184,7 @@ public class NewsService {
         newsDislikeRepository.delete(newsDislike);
 
     }
+
 
 
 }

@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class NewsDTO extends RepresentationModel<NewsDTO> {
 
@@ -24,12 +25,11 @@ public class NewsDTO extends RepresentationModel<NewsDTO> {
     private List<Long> dislikesId;
 
     public NewsDTO(News news) {
-
-        setId(news.getId());
+        if(news.getId() != null) news.setId(news.getId());
         setTitle(news.getTitle());
         setText(news.getText());
         setInstant(news.getInstant());
-        setAuthorId(news.getAuthor().getId());
+        if(news.getAuthor() != null) setAuthorId(news.getAuthor().getId());
         setImagesUrl(news.getImagesUrl());
         setCommentsId(news.getComments().stream().map(Comment::getId).toList());
         setTopicsId(news.getTopics().stream().map(Topic::getId).toList());
@@ -123,5 +123,18 @@ public class NewsDTO extends RepresentationModel<NewsDTO> {
 
     public String toString() {
         return "NewsDTO(id=" + this.getId() + ", title=" + this.getTitle() + ", text=" + this.getText() + ", instant=" + this.getInstant() + ", authorId=" + this.getAuthorId() + ", imagesUrl=" + this.getImagesUrl() + ", commentsId=" + this.getCommentsId() + ", topicsId=" + this.getTopicsId() + ", likesId=" + this.getLikesId() + ", dislikesId=" + this.getDislikesId() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewsDTO newsDTO = (NewsDTO) o;
+        return Objects.equals(id, newsDTO.id) && Objects.equals(title, newsDTO.title) && Objects.equals(text, newsDTO.text) && Objects.equals(instant, newsDTO.instant) && Objects.equals(authorId, newsDTO.authorId) && Objects.equals(imagesUrl, newsDTO.imagesUrl) && Objects.equals(commentsId, newsDTO.commentsId) && Objects.equals(topicsId, newsDTO.topicsId) && Objects.equals(likesId, newsDTO.likesId) && Objects.equals(dislikesId, newsDTO.dislikesId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, title, text, instant, authorId, imagesUrl, commentsId, topicsId, likesId, dislikesId);
     }
 }

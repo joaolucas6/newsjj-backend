@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_news")
@@ -139,26 +140,16 @@ public class News {
         return "News(id=" + this.getId() + ", title=" + this.getTitle() + ", text=" + this.getText() + ", instant=" + this.getInstant() + ", author=" + this.getAuthor() + ", imagesUrl=" + this.getImagesUrl() + ", topics=" + this.getTopics() + ", comments=" + this.getComments() + ", likes=" + this.getLikes() + ", dislikes=" + this.getDislikes() + ")";
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof News)) return false;
-        final News other = (News) o;
-        if (!other.canEqual((Object) this)) return false;
-        final Object this$id = this.getId();
-        final Object other$id = other.getId();
-        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return Objects.equals(id, news.id) && Objects.equals(title, news.title) && Objects.equals(text, news.text) && Objects.equals(instant, news.instant) && Objects.equals(author, news.author) && Objects.equals(imagesUrl, news.imagesUrl) && Objects.equals(topics, news.topics) && Objects.equals(comments, news.comments) && Objects.equals(likes, news.likes) && Objects.equals(dislikes, news.dislikes);
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof News;
-    }
-
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Object $id = this.getId();
-        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        return result;
+        return Objects.hash(id, title, text, instant, author, imagesUrl, topics, comments, likes, dislikes);
     }
 }
