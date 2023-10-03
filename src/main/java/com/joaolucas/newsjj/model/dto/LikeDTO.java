@@ -5,6 +5,7 @@ import com.joaolucas.newsjj.model.entities.likes.NewsLike;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class LikeDTO extends RepresentationModel<LikeDTO> {
 
@@ -16,16 +17,16 @@ public class LikeDTO extends RepresentationModel<LikeDTO> {
 
     public LikeDTO(CommentLike commentLike) {
         setId(commentLike.getId());
-        setAuthorId(commentLike.getAuthor().getId());
-        setContentId(commentLike.getComment().getId());
+        if(commentLike.getAuthor() != null) setAuthorId(commentLike.getAuthor().getId());
+        if(commentLike.getComment() != null) setContentId(commentLike.getComment().getId());
         setInstant(commentLike.getInstant());
         setLikeType("Comment Like");
     }
 
     public LikeDTO(NewsLike newsLike) {
         setId(newsLike.getId());
-        setAuthorId(newsLike.getAuthor().getId());
-        setContentId(newsLike.getNews().getId());
+        if(newsLike.getAuthor() != null) setAuthorId(newsLike.getAuthor().getId());
+        if(newsLike.getAuthor() != null) setContentId(newsLike.getNews().getId());
         setInstant(newsLike.getInstant());
         setLikeType("News Like");
     }
@@ -75,5 +76,18 @@ public class LikeDTO extends RepresentationModel<LikeDTO> {
 
     public String toString() {
         return "LikeDTO(id=" + this.getId() + ", authorId=" + this.getAuthorId() + ", contentId=" + this.getContentId() + ", instant=" + this.getInstant() + ", likeType=" + this.getLikeType() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LikeDTO likeDTO = (LikeDTO) o;
+        return Objects.equals(id, likeDTO.id) && Objects.equals(authorId, likeDTO.authorId) && Objects.equals(contentId, likeDTO.contentId) && Objects.equals(instant, likeDTO.instant) && Objects.equals(likeType, likeDTO.likeType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, authorId, contentId, instant, likeType);
     }
 }
