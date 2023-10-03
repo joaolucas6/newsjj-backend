@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class CommentDTO extends RepresentationModel<CommentDTO> {
 
@@ -22,8 +23,8 @@ public class CommentDTO extends RepresentationModel<CommentDTO> {
         setId(comment.getId());
         setText(comment.getText());
         setInstant(comment.getInstant());
-        setAuthorId(comment.getAuthor().getId());
-        setNewsId(comment.getNews().getId());
+        if(comment.getAuthor() != null) setAuthorId(comment.getAuthor().getId());
+        if(comment.getNews() != null) setNewsId(comment.getNews().getId());
         setLikes(comment.getLikes().stream().map(CommentLike::getId).toList());
         setDislikes(comment.getDislikes().stream().map(CommentDislike::getId).toList());
     }
@@ -89,5 +90,18 @@ public class CommentDTO extends RepresentationModel<CommentDTO> {
 
     public String toString() {
         return "CommentDTO(id=" + this.getId() + ", text=" + this.getText() + ", instant=" + this.getInstant() + ", authorId=" + this.getAuthorId() + ", newsId=" + this.getNewsId() + ", likes=" + this.getLikes() + ", dislikes=" + this.getDislikes() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommentDTO that = (CommentDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(text, that.text) && Objects.equals(instant, that.instant) && Objects.equals(authorId, that.authorId) && Objects.equals(newsId, that.newsId) && Objects.equals(likes, that.likes) && Objects.equals(dislikes, that.dislikes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, text, instant, authorId, newsId, likes, dislikes);
     }
 }
